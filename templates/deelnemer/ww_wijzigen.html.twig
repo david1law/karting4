@@ -1,0 +1,15 @@
+{% extends 'deelnemer.html.twig' %}
+
+{% block menu %}
+    <li><a href="{{ path('activiteiten') }}">Home</a></li>
+    <li><a> | </a></li>
+    <li><a href="{{ path('profiel') }}">Profiel</a></li>
+{% endblock %}
+
+{% block content %}
+    <h3>Wachtwoord wijzigen</h3>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

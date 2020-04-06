@@ -7,5 +7,36 @@
 {% endblock %}
 
 {% block content %}
-
+    <section >
+        <table class="table table-bordered" style="table-layout: fixed">
+            <caption>Gegevens</caption>
+            <tr>
+                <td>Naam</td>
+{#                <td class="text-primary">{{ deelnemer.voorletters }} {{ deelnemer.achternaam }}</td>#}
+                <td class="text-primary">{{ app.user.voorletters }} {{ app.user.achternaam }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ app.user.email }}</td>
+            </tr>
+            <tr>
+                <td>Adres</td>
+                <td>{{ app.user.adres }}</td>
+            </tr>
+            <tr>
+                <td>Postcode</td>
+                <td>{{ app.user.postcode }}</td>
+            </tr>
+            <tr>
+                <td>Woonplaats</td>
+                <td>{{ app.user.woonplaats }}</td>
+            </tr>
+            <tr>
+                <td>Telefoon</td>
+                <td>{{ app.user.telefoon }}</td>
+            </tr>
+        </table>
+        <a href="#">Wachtwoord wijzigen</a>
+        <br/>
+    </section>
 {% endblock %}

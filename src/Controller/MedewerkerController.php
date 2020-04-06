@@ -115,7 +115,6 @@ class MedewerkerController extends AbstractController {
             ->findAll();
         return $this->render('medewerker/activiteit_toevoegen.html.twig', [
             'form'=>$form->createView(),
-            'naam'=>'toevoegen',
             'aantal'=>count($activiteiten),
             'soortactiviteiten' => $soortactiviteiten
         ]);

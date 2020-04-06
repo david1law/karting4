@@ -26,14 +26,10 @@
     <li><a href="{{ path('deelnemers') }}">deelnemers</a></li>
 {% endblock %}
 
-
-
 {% block content %}
-    <h3>Activiteit {{ naam }}</h3>
+    <h3>Activiteit toevoegen</h3>
 
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-
-
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}

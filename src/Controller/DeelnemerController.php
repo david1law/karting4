@@ -25,9 +25,9 @@ class DeelnemerController extends AbstractController {
             ->getTotaal($ingeschrevenActiviteiten);
 
         return $this->render('deelnemer/activiteiten.html.twig', [
-                'beschikbare_activiteiten'=>$beschikbareActiviteiten,
-                'ingeschreven_activiteiten'=>$ingeschrevenActiviteiten,
-                'totaal'=>$totaal,
+            'beschikbare_activiteiten' => $beschikbareActiviteiten,
+            'ingeschreven_activiteiten' => $ingeschrevenActiviteiten,
+            'totaal' => $totaal,
         ]);
     }
 
@@ -68,6 +68,6 @@ class DeelnemerController extends AbstractController {
      * @Route("/user/profiel", name="profiel")
      */
     public function profielAction() {
-        return $this->render('deelnemer/profiel.html.twig');    
+        return $this->render('deelnemer/profiel.html.twig');
     }
 }
