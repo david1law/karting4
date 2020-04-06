@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\Ww_wijzigenType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DeelnemerController extends AbstractController {
@@ -69,5 +72,30 @@ class DeelnemerController extends AbstractController {
      */
     public function profielAction() {
         return $this->render('deelnemer/profiel.html.twig');
+    }
+
+    /**
+     * @Route("/user/wachtwoord", name="ww_wijzigen")
+     */
+    public function wachtwoordAction(Request $request) {
+        $user = $this->getUser();
+
+        $form = $this->createForm(Ww_wijzigenType::class, $user);
+        $form->add('save', SubmitType::class, ['label' => "aanpassen"]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('notice', 'wachtwoord gewijzigd!');
+
+            return $this->redirectToRoute('profiel');
+        }
+
+        return $this->render('deelnemer/ww_wijzigen.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

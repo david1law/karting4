@@ -124,39 +124,36 @@ class MedewerkerController extends AbstractController {
      * @Route("/admin/update/{id}", name="update")
      */
     public function updateAction($id,Request $request) {
-        $a=$this->getDoctrine()
+        $a = $this->getDoctrine()
             ->getRepository('App:Activiteit')
             ->find($id);
 
-        $repository = $this->getDoctrine()->getRepository(Soortactiviteit::class);
-        $soortactiviteiten = $repository->findAll();
-
         $form = $this->createForm(ActiviteitType::class, $a);
-        $form->add('save', SubmitType::class, array('label'=>"aanpassen"));
-
+        $form->add('save', SubmitType::class, ['label' => "aanpassen"]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($a);
             $em->flush();
 
-            $this->addFlash(
-                'notice',
-                'activiteit aangepast!'
-            );
+            $this->addFlash('notice','activiteit aangepast!');
+
             return $this->redirectToRoute('beheer');
         }
 
-        $activiteiten=$this->getDoctrine()
-            ->getRepository('App:Activiteit')
+        $activiteiten = $this->getDoctrine()
+            ->getRepository(Activiteit::class)
+            ->findAll();
+
+        $soortactiviteiten = $this->getDoctrine()
+            ->getRepository(Soortactiviteit::class)
             ->findAll();
 
         return $this->render('medewerker/activiteit_toevoegen.html.twig', [
-            'form'=>$form->createView(),
-            'naam'=>'aanpassen',
-            'aantal'=>count($activiteiten),
+            'form' => $form->createView(),
+            'naam' => 'aanpassen',
+            'aantal' => count($activiteiten),
             'soortactiviteiten' => $soortactiviteiten
         ]);
     }

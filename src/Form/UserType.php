@@ -15,15 +15,10 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 
-class UserType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-
+class UserType extends AbstractType {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('username',TextType::class
-                , array(
-        'label' => 'Gebruikersnaam'))
+            ->add('username',TextType::class, array('label' => 'Gebruikersnaam'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Wachtwoord'),
