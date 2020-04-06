@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 24 mrt 2020 om 13:40
--- Serverversie: 10.4.11-MariaDB
--- PHP-versie: 7.4.1
+-- Generation Time: Apr 06, 2020 at 03:03 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -27,36 +27,35 @@ USE `karting4`;
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `activiteiten`
+-- Table structure for table `activiteiten`
 --
 
-CREATE TABLE IF NOT EXISTS `activiteiten` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `activiteiten` (
+  `id` int(11) NOT NULL,
   `soort_id` int(11) DEFAULT NULL,
   `datum` date NOT NULL,
-  `tijd` time NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_1C50895F3DEE50DF` (`soort_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `tijd` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `activiteiten`
+-- Dumping data for table `activiteiten`
 --
 
 INSERT INTO `activiteiten` (`id`, `soort_id`, `datum`, `tijd`) VALUES
 (9, 1, '2020-04-01', '09:00:00'),
 (10, 2, '2020-04-01', '11:00:00'),
 (11, 3, '2020-04-06', '15:00:00'),
-(12, 4, '2020-05-02', '10:00:00');
+(12, 4, '2020-05-02', '10:00:00'),
+(48, 3867, '2020-05-27', '16:30:00');
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `app_users`
+-- Table structure for table `app_users`
 --
 
-CREATE TABLE IF NOT EXISTS `app_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `app_users` (
+  `id` int(11) NOT NULL,
   `username` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -67,13 +66,11 @@ CREATE TABLE IF NOT EXISTS `app_users` (
   `adres` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `postcode` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
   `woonplaats` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `telefoon` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_C2502824F85E0677` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `telefoon` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `app_users`
+-- Dumping data for table `app_users`
 --
 
 INSERT INTO `app_users` (`id`, `username`, `password`, `email`, `roles`, `voorletters`, `tussenvoegsel`, `achternaam`, `adres`, `postcode`, `woonplaats`, `telefoon`) VALUES
@@ -85,19 +82,16 @@ INSERT INTO `app_users` (`id`, `username`, `password`, `email`, `roles`, `voorle
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `deelnames`
+-- Table structure for table `deelnames`
 --
 
-CREATE TABLE IF NOT EXISTS `deelnames` (
+CREATE TABLE `deelnames` (
   `user_id` int(11) NOT NULL,
-  `activiteit_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`,`activiteit_id`),
-  KEY `IDX_ED2478E7A76ED395` (`user_id`),
-  KEY `IDX_ED2478E75A8A0A1` (`activiteit_id`)
+  `activiteit_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `deelnames`
+-- Dumping data for table `deelnames`
 --
 
 INSERT INTO `deelnames` (`user_id`, `activiteit_id`) VALUES
@@ -110,17 +104,16 @@ INSERT INTO `deelnames` (`user_id`, `activiteit_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `migration_versions`
+-- Table structure for table `migration_versions`
 --
 
-CREATE TABLE IF NOT EXISTS `migration_versions` (
+CREATE TABLE `migration_versions` (
   `version` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
-  PRIMARY KEY (`version`)
+  `executed_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `migration_versions`
+-- Dumping data for table `migration_versions`
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
@@ -129,40 +122,100 @@ INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `soortactiviteiten`
+-- Table structure for table `soortactiviteiten`
 --
 
-CREATE TABLE IF NOT EXISTS `soortactiviteiten` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `soortactiviteiten` (
+  `id` int(11) NOT NULL,
   `naam` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `min_leeftijd` int(11) NOT NULL,
   `tijdsduur` int(11) NOT NULL,
-  `prijs` decimal(6,2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `prijs` decimal(6,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Gegevens worden geëxporteerd voor tabel `soortactiviteiten`
+-- Dumping data for table `soortactiviteiten`
 --
 
 INSERT INTO `soortactiviteiten` (`id`, `naam`, `min_leeftijd`, `tijdsduur`, `prijs`) VALUES
 (1, 'Vrije training', 12, 15, '15.00'),
 (2, 'Grand Prix', 12, 60, '50.00'),
 (3, 'Endurance race', 16, 90, '65.00'),
-(4, 'Kinder race', 8, 10, '18.00');
+(4, 'Kinder race', 8, 10, '18.00'),
+(3867, 'Tijd race', 8, 15, '20.00');
 
 --
--- Beperkingen voor geëxporteerde tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Beperkingen voor tabel `activiteiten`
+-- Indexes for table `activiteiten`
+--
+ALTER TABLE `activiteiten`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_1C50895F3DEE50DF` (`soort_id`);
+
+--
+-- Indexes for table `app_users`
+--
+ALTER TABLE `app_users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UNIQ_C2502824F85E0677` (`username`);
+
+--
+-- Indexes for table `deelnames`
+--
+ALTER TABLE `deelnames`
+  ADD PRIMARY KEY (`user_id`,`activiteit_id`),
+  ADD KEY `IDX_ED2478E7A76ED395` (`user_id`),
+  ADD KEY `IDX_ED2478E75A8A0A1` (`activiteit_id`);
+
+--
+-- Indexes for table `migration_versions`
+--
+ALTER TABLE `migration_versions`
+  ADD PRIMARY KEY (`version`);
+
+--
+-- Indexes for table `soortactiviteiten`
+--
+ALTER TABLE `soortactiviteiten`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `activiteiten`
+--
+ALTER TABLE `activiteiten`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `app_users`
+--
+ALTER TABLE `app_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `soortactiviteiten`
+--
+ALTER TABLE `soortactiviteiten`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3868;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `activiteiten`
 --
 ALTER TABLE `activiteiten`
   ADD CONSTRAINT `FK_1C50895F3DEE50DF` FOREIGN KEY (`soort_id`) REFERENCES `soortactiviteiten` (`id`);
 
 --
--- Beperkingen voor tabel `deelnames`
+-- Constraints for table `deelnames`
 --
 ALTER TABLE `deelnames`
   ADD CONSTRAINT `FK_ED2478E75A8A0A1` FOREIGN KEY (`activiteit_id`) REFERENCES `activiteiten` (`id`) ON DELETE CASCADE,
