@@ -1,0 +1,48 @@
+{% extends 'medewerker.html.twig' %}
+
+{% block menu %}
+    <li><a href="{{ path('activiteitenoverzicht') }}">home</a></li>
+    <li><a href="{{ path('beheer') }}"><span class="badge">{{ activiteiten|length }}</span> beheer</a></li>
+    <li class="active"><a href="{{ path('soortactiviteiten') }}"><span class="badge">{{ soortactiviteiten|length }}</span> activiteitsoorten</a></li>
+    <li><a href="{{ path('deelnemers') }}">deelnemers</a></li>
+{% endblock %}
+{% block content %}
+    <section>
+        <table class="table" style="table-layout: fixed">
+            <caption>Dit zijn alle activiteiten van het kartcentrum</caption>
+            <thead>
+            <tr>
+                <td>soort activiteit</td>
+                <td>bewerken</td>
+                <td>verwijderen</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for soortactiviteit in soortactiviteiten %}
+                <tr>
+                    <td>
+                        {{ soortactiviteit.naam }}
+                    </td>
+                    <td title="bewerk de gegevens van deze activiteit">
+                        <a href="{{ path('update', {'id':soortactiviteit.id}) }}" >
+                            <span class="glyphicon glyphicon-pencil" style="color:red"></span>
+                        </a>
+                    </td>
+                    <td title="verwijder deze activiteit is definitief">
+                        <a href="{{ path('delete', { 'type': 'soortactiviteit', 'id':soortactiviteit.id}) }}" >
+                            <span class="glyphicon glyphicon-minus" style="color:red"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="6">
+                    <a href="{{ path('activiteit_toevoegen', { 'type': 'soortactiviteit' }) }}">
+                        <span class="glyphicon glyphicon-plus" style="color:red"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

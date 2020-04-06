@@ -1,0 +1,48 @@
+{% extends 'bezoeker.html.twig' %}
+
+{% block menu %}
+    <li><a href="{{ path('homepage') }}">home</a></li>
+    <li><a href="{{ path('kartactiviteiten') }}">activiteiten</a></li>
+    <li class="active"><a href="{{ path('aanbod') }}">aanbod</a></li>
+    <li><a href="{{ path('registreren') }}">registreren</a></li>
+    <li><a href="#">contact</a></li>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <table class="table" style="table-layout: fixed" >
+            <caption>
+                Dit zijn alle beschikbare activiteiten
+            </caption>
+            <thead>
+            <tr>
+                <td>datum</td>
+                <td>tijd</td>
+                <td>soort activiteit</td>
+                <td>prijs</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activiteit in activiteiten %}
+                <tr>
+                    <td>
+                        {{ activiteit.datum|date("d-m-Y")}}
+                    </td>
+                    <td>
+                        {{ activiteit.tijd|date("H:i")}}
+                    </td>
+
+                    <td>
+                        {{ activiteit.soort.naam}}
+                    </td>
+                    <td>
+                        &euro;{{ activiteit.soort.prijs|number_format(2,',','.')}}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </section>
+{% endblock %}
