@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DeelnemerController extends AbstractController {
     /**
@@ -17,7 +18,7 @@ class DeelnemerController extends AbstractController {
 
         $beschikbareActiviteiten = $this->getDoctrine()
             ->getRepository('App:Activiteit')
-        ->getBeschikbareActiviteiten($user->getId());
+            ->getBeschikbareActiviteiten($user->getId());
 
         $ingeschrevenActiviteiten = $this->getDoctrine()
             ->getRepository('App:Activiteit')
@@ -42,7 +43,7 @@ class DeelnemerController extends AbstractController {
         $activiteit = $this->getDoctrine()
             ->getRepository('App:Activiteit')
             ->find($id);
-        $usr= $this->get('security.token_storage')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $usr->addActiviteit($activiteit);
 
         $em = $this->getDoctrine()->getManager();
@@ -59,7 +60,7 @@ class DeelnemerController extends AbstractController {
         $activiteit = $this->getDoctrine()
             ->getRepository('App:Activiteit')
             ->find($id);
-        $usr= $this->get('security.token_storage')->getToken()->getUser();
+        $usr = $this->get('security.token_storage')->getToken()->getUser();
         $usr->removeActiviteit($activiteit);
         $em = $this->getDoctrine()->getManager();
         $em->persist($usr);
@@ -77,25 +78,24 @@ class DeelnemerController extends AbstractController {
     /**
      * @Route("/user/wachtwoord", name="ww_wijzigen")
      */
-    public function wachtwoordAction(Request $request) {
+    public function wachtwoordAction(Request $request, UserPasswordEncoderInterface $encoder) {
         $user = $this->getUser();
-
         $form = $this->createForm(Ww_wijzigenType::class, $user);
+
         $form->add('save', SubmitType::class, ['label' => "aanpassen"]);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $encoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
             $this->addFlash('notice', 'wachtwoord gewijzigd!');
-
             return $this->redirectToRoute('profiel');
         }
-
-        return $this->render('deelnemer/ww_wijzigen.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render('deelnemer/ww_wijzigen.html.twig', ['form' => $form->createView()]);
     }
 }
