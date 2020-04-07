@@ -42,8 +42,8 @@
                     <td>
                         {{ deelnemer.telefoon}}
                     </td>
-                    <td title="verwijder deze activiteit is definitief">
-                        <a href="{{ path('delete', { 'type': 'soortactiviteit', 'id':deelnemer.id}) }}" >
+                    <td title="verwijder deze deelnemer is definitief">
+                        <a href="{{ path('delete', { 'type': 'deelnemer', 'id':deelnemer.id}) }}" >
                             <span class="glyphicon glyphicon-minus" style="color:red"></span>
                         </a>
                     </td>

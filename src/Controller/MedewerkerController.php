@@ -168,6 +168,9 @@ class MedewerkerController extends AbstractController {
         } elseif ($type == 'soortactiviteit') {
             $delete = Soortactiviteit::class;
             $returnpage = 'soortactiviteiten';
+        } elseif ($type == 'deelnemer') {
+            $delete = User::class;
+            $returnpage = 'deelnemers';
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -178,7 +181,7 @@ class MedewerkerController extends AbstractController {
 
         $this->addFlash(
             'notice',
-            'activiteit verwijderd!'
+            'verwijderd!'
         );
         return $this->redirectToRoute($returnpage);
     }
