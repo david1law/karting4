@@ -48,7 +48,6 @@ class MedewerkerController extends AbstractController {
         $repository = $this->getDoctrine()->getRepository(Soortactiviteit::class);
         $soortactiviteiten = $repository->findAll();
 
-
         return $this->render('medewerker/details.html.twig', [
             'activiteit'=>$activiteit,
             'deelnemers'=>$deelnemers,
@@ -173,9 +172,10 @@ class MedewerkerController extends AbstractController {
             $returnpage = 'deelnemers';
         }
 
-        $em = $this->getDoctrine()->getManager();
         $a = $this->getDoctrine()
             ->getRepository($delete)->find($id);
+
+        $em = $this->getDoctrine()->getManager();
         $em->remove($a);
         $em->flush();
 
@@ -183,6 +183,7 @@ class MedewerkerController extends AbstractController {
             'notice',
             'verwijderd!'
         );
+
         return $this->redirectToRoute($returnpage);
     }
 

@@ -39,15 +39,14 @@ class DeelnemerController extends AbstractController {
      * @Route("/user/inschrijven/{id}", name="inschrijven")
      */
     public function inschrijvenActiviteitAction($id) {
-
         $activiteit = $this->getDoctrine()
             ->getRepository('App:Activiteit')
             ->find($id);
-        $usr = $this->get('security.token_storage')->getToken()->getUser();
-        $usr->addActiviteit($activiteit);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->addActiviteit($activiteit);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($usr);
+        $em->persist($user);
         $em->flush();
 
         return $this->redirectToRoute('activiteiten');
@@ -60,11 +59,13 @@ class DeelnemerController extends AbstractController {
         $activiteit = $this->getDoctrine()
             ->getRepository('App:Activiteit')
             ->find($id);
-        $usr = $this->get('security.token_storage')->getToken()->getUser();
-        $usr->removeActiviteit($activiteit);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->removeActiviteit($activiteit);
+
         $em = $this->getDoctrine()->getManager();
-        $em->persist($usr);
+        $em->persist($user);
         $em->flush();
+
         return $this->redirectToRoute('activiteiten');
     }
 
@@ -96,6 +97,9 @@ class DeelnemerController extends AbstractController {
             $this->addFlash('notice', 'wachtwoord gewijzigd!');
             return $this->redirectToRoute('profiel');
         }
-        return $this->render('deelnemer/ww_wijzigen.html.twig', ['form' => $form->createView()]);
+
+        return $this->render('deelnemer/ww_wijzigen.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
